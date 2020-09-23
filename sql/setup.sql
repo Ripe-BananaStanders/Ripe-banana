@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS studios CASCADE;
+
+CREATE TABLE studios (
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    name TEXT NOT NULL,
+    state TEXT NOT NULL,
+    country TEXT NOT NULL
+
+);
+

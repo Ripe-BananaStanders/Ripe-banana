@@ -17,9 +17,8 @@ describe('Ripe-banana routes', () => {
         city: chance.city(),
         state: chance.state(),
         country: chance.country()
-        
-
       })
+
       .then(res => {
         expect(res.body).toEqual({
           id: expect.any(String),
@@ -27,15 +26,24 @@ describe('Ripe-banana routes', () => {
           city: expect.any(String),
           state: expect.any(String),
           country: expect.any(String)
-
         });
-    
       });
-
-
-
   });
 
+  it('gets a studio by id via GET', async() => {
+    const studio = (await Studio.find())[0];
+    const response = await request(app)
+      .get(`/api/v1/studios/${studio.id}`);
+  
+    expect(response.body).toEqual(studio);
+  });
 
+  it('get all studios via GET', async() => {
+    const studios = await Studio.find();
+    const response = await request(app)
+      .get('/api/v1/studios');
+
+    expect(response.body).toEqual(expect.arrayContaining(studios));
+  });
 
 });

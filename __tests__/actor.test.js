@@ -26,4 +26,20 @@ describe('Ripe-banana routes', () => {
         });
       });
   });
+
+  it('gets a actor by id via GET', async() => {
+    const actor = (await Actor.find())[0];
+    const response = await request(app)
+      .get(`/api/v1/actors/${actor.id}`);
+
+    expect(response.body).toEqual({...actor, dob: actor.dob.toISOString() });
+  });
+
+  it('get all actors via GET', async() => {
+    const actors = await Actor.find();
+    const response = await request(app)
+      .get('/api/v1/actors');
+
+    expect(response.body).toEqual(expect.arrayContaining (JSON.parse(JSON.stringify(actors))));
+  });
 });

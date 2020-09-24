@@ -2,10 +2,11 @@ const Studio = require('../lib/models/studio');
 const Actor = require('../lib/models/actor');
 const Reviewer = require('../lib/models/reviewer');
 const Film = require('../lib/models/film');
+const Review = require('../lib/models/review');
 
 const chance = require('chance').Chance();
 
-module.exports = async({ studioCount = 5, actorCount = 5, reviewersCount = 5, filmsCount = 5 } = {}) => {
+module.exports = async({ studioCount = 5, actorCount = 5, reviewersCount = 5, filmsCount = 5, reviewCount = 5  } = {}) => {
   const studiosToCreate = [...Array(studioCount)]
     .map(() => ({
       name: chance.first(),
@@ -35,7 +36,7 @@ module.exports = async({ studioCount = 5, actorCount = 5, reviewersCount = 5, fi
       company: chance.company()
     }));  
 
-  await Promise.all(reviewersToCreate
+  const reviewers = await Promise.all(reviewersToCreate
     .map(reviewer => Reviewer.insert(reviewer))); 
 
  
@@ -53,8 +54,19 @@ module.exports = async({ studioCount = 5, actorCount = 5, reviewersCount = 5, fi
       ]),
     }));  
 
-  await Promise.all(filmsToCreate
+  const films = await Promise.all(filmsToCreate
     .map(film => Film.insert(film))); 
-  
+
+
+  const reviewsToCreate = [...Array(reviewCount)]
+    .map(() => ({
+      rating: 4,
+      reviewerId: chance.pickone(reviewers).id,
+      review: chance.sentence(),
+      filmId: 4
+
+    }));
+  await Promise.all(reviewsToCreate
+    .map(review => Review.insert(review))); 
 };
 

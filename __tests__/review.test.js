@@ -28,13 +28,9 @@ describe('Review-routes', () => {
           reviewerId: expect.any(String),
           review: expect.any(String),
           filmId: '4'
-
-          
         });
       });
       
-   
-    
   });
   
   it('get all reviews via GET', async() => {

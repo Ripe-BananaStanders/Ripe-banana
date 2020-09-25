@@ -32,9 +32,17 @@ describe('Review-routes', () => {
           
         });
       });
+      
    
     
   });
+  
+  it('get all reviews via GET', async() => {
+    const reviews = await Review.find();
+    const response = await request(app)
+      .get('/api/v1/reviews');
 
+    expect(response.body).toEqual(expect.arrayContaining(reviews));
+  });
 
 });

@@ -44,5 +44,14 @@ describe('Review-routes', () => {
 
     expect(response.body).toEqual(expect.arrayContaining(reviews));
   });
+  it('deletes a review by id', async() => {
+    const review = (await Review.find())[0];
+    return request(app)      
+      .delete(`/api/v1/reviews/${review.id}`)      
+      .then(res => {        
+        expect(res.body).toEqual(review);      
+      });
+    
+  });
 
 });

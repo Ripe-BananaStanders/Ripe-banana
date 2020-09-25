@@ -39,8 +39,6 @@ module.exports = async({ studioCount = 5, actorCount = 5, reviewersCount = 5, fi
   const reviewers = await Promise.all(reviewersToCreate
     .map(reviewer => Reviewer.insert(reviewer))); 
 
- 
-  
   const filmsToCreate = [...Array(filmsCount)]
     .map(() => ({
       studioId: chance.pickone(studios).id,
@@ -57,16 +55,16 @@ module.exports = async({ studioCount = 5, actorCount = 5, reviewersCount = 5, fi
   const films = await Promise.all(filmsToCreate
     .map(film => Film.insert(film))); 
 
-
   const reviewsToCreate = [...Array(reviewCount)]
     .map(() => ({
       rating: 4,
       reviewerId: chance.pickone(reviewers).id,
       review: chance.sentence(),
       filmId: 4
-
     }));
+    
   await Promise.all(reviewsToCreate
     .map(review => Review.insert(review))); 
 };
+
 

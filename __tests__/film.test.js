@@ -36,6 +36,15 @@ describe('Film-routes', () => {
       });
     
   });
+  it('should return all films with studio id and name attached via GET', async() => {
+    const films = await Film.find();
+    const response = await request(app)
+      .get('/api/v1/films');
+    console.log(films);
+
+    expect(response.body).toEqual(expect.arrayContaining (JSON.parse(JSON.stringify(films))));
+
+  });
 
 
 });
